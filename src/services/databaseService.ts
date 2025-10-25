@@ -9,8 +9,6 @@ import {
   query,
   where,
   orderBy,
-  limit,
-  startAfter,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "../firebase";
@@ -19,7 +17,6 @@ import {
   Category,
   Customer,
   Order,
-  Admin,
   DashboardStats,
   Review,
   ContactMessage,

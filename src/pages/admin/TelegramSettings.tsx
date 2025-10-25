@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
-  Send,
   CheckCircle,
   XCircle,
   Settings,
-  Bell,
   MessageSquare,
   TestTube,
   Save,

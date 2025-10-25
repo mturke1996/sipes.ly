@@ -120,6 +120,7 @@ class ImageUploadService {
   /**
    * تحويل File إلى Base64
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private fileToBase64(file: File): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();

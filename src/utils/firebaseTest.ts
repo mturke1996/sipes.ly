@@ -9,12 +9,12 @@ export const testFirebaseConnection = async () => {
 
     // Test Firestore connection
     const testCollection = collection(db, "test");
-    const snapshot = await getDocs(testCollection);
+    await getDocs(testCollection);
     console.log("✅ Firestore connection successful");
 
     // Test Auth connection
     return new Promise((resolve) => {
-      onAuthStateChanged(auth, (user) => {
+      onAuthStateChanged(auth, () => {
         console.log("✅ Auth connection successful");
         resolve(true);
       });
