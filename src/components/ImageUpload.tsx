@@ -2,10 +2,8 @@ import { useState, useRef } from "react";
 import {
   Upload,
   X,
-  Image as ImageIcon,
   Loader2,
   Check,
-  AlertCircle,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import toast from "react-hot-toast";
@@ -14,7 +12,7 @@ import { ImgBBResponse } from "../types/database";
 
 interface ImageUploadProps {
   onImageUploaded: (response: ImgBBResponse) => void;
-  onImageRemoved?: () => void;
+  onImageRemoved?: (index?: number) => void;
   maxFiles?: number;
   acceptedTypes?: string[];
   maxSize?: number; // in MB
@@ -222,7 +220,7 @@ export default function ImageUpload({
                   <button
                     onClick={() => {
                       // يمكن إضافة منطق حذف الصور الموجودة هنا
-                      toast.info("حذف الصور الموجودة غير متاح حالياً");
+                      toast("حذف الصور الموجودة غير متاح حالياً");
                     }}
                     className="opacity-0 group-hover:opacity-100 transition p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
                   >

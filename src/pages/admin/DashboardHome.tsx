@@ -7,7 +7,6 @@ import {
   TrendingUp,
   AlertTriangle,
   Clock,
-  Star,
   RefreshCw,
 } from "lucide-react";
 import { motion } from "framer-motion";

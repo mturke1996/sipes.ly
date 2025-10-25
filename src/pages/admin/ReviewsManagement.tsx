@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Star, MessageSquare, Trash2, Eye, EyeOff, Reply } from "lucide-react";
+import { Star, Trash2, Eye, EyeOff, Reply } from "lucide-react";
 import toast from "react-hot-toast";
 import { reviewsService } from "../../services/databaseService";
 import { Review } from "../../types/database";

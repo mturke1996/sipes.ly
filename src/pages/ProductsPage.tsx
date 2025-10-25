@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ShoppingCart, Heart, Star } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import { useCartStore } from "../store/cartStore";
 import { productsService } from "../services/databaseService";
 import { Product } from "../types/database";

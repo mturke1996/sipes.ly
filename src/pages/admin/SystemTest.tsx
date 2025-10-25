@@ -6,10 +6,7 @@ import {
   Database,
   MessageSquare,
   Image,
-  Package,
-  Settings,
   TestTube,
-  AlertTriangle,
   Info,
 } from "lucide-react";
 import toast from "react-hot-toast";
@@ -145,7 +142,7 @@ export default function SystemTest() {
       async () => {
         try {
           const settings = telegramService.getSettings();
-          return settings.botToken && settings.chatId;
+          return Boolean(settings.botToken && settings.chatId);
         } catch (error) {
           console.error("Telegram test failed:", error);
           return false;
@@ -160,7 +157,7 @@ export default function SystemTest() {
       async () => {
         try {
           const isValid = await imageUploadService.validateApiKey();
-          return isValid;
+          return Boolean(isValid);
         } catch (error) {
           console.error("Image upload test failed:", error);
           return false;

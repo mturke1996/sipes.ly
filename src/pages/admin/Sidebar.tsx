@@ -13,7 +13,6 @@ import {
   Star,
   Mail,
 } from "lucide-react";
-import SipesLogo from "../../components/SipesLogo";
 
 interface SidebarProps {
   isOpen: boolean;

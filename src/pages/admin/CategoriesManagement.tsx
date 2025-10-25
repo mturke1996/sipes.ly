@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Edit2, Trash2, Search, Save, X, Upload } from "lucide-react";
+import { Plus, Edit2, Trash2, Search, Save, X } from "lucide-react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import { categoriesService } from "../../services/databaseService";

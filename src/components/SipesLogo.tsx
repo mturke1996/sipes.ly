@@ -1,4 +1,3 @@
-import React from "react";
 
 interface SipesLogoProps {
   size?: "sm" | "md" | "lg" | "xl";
@@ -29,12 +28,6 @@ export default function SipesLogo({
     xl: "text-lg sm:text-2xl md:text-3xl lg:text-4xl",
   };
 
-  const symbolSizeClasses = {
-    sm: "w-3 h-3",
-    md: "w-4 h-4",
-    lg: "w-5 h-5",
-    xl: "w-6 h-6",
-  };
 
   return (
     <div

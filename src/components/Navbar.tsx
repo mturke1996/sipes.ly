@@ -6,8 +6,6 @@ import {
   ShoppingCart,
   LogOut,
   LogIn,
-  Award,
-  Star,
 } from "lucide-react";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";

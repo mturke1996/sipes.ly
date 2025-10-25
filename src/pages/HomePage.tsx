@@ -6,7 +6,6 @@ import {
   Award,
   Users,
   ArrowRight,
-  CheckCircle,
   ShoppingCart,
 } from "lucide-react";
 import Hero from "../components/Hero";

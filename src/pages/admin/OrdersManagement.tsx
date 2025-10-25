@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import {
   Eye,
-  Download,
-  Edit,
   Trash2,
   Search,
   Filter,
@@ -19,7 +17,7 @@ import { Order, Customer } from "../../types/database";
 
 export default function OrdersManagement() {
   const [orders, setOrders] = useState<Order[]>([]);
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const [, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -100,17 +98,6 @@ export default function OrdersManagement() {
     }
   };
 
-  const getStatusText = (status: string) => {
-    const statusMap = {
-      pending: "في الانتظار",
-      confirmed: "مؤكد",
-      processing: "قيد المعالجة",
-      shipped: "تم الشحن",
-      delivered: "تم التسليم",
-      cancelled: "ملغي",
-    };
-    return statusMap[status as keyof typeof statusMap] || status;
-  };
 
   const filteredOrders = orders.filter((order) => {
     const matchesSearch =
