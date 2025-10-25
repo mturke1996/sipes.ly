@@ -1,7 +1,7 @@
 export interface User {
   uid: string;
   email: string;
-  role: 'admin' | 'user';
+  role: "admin" | "user";
   createdAt: string;
 }
 
@@ -41,7 +41,7 @@ export interface Order {
   userId: string;
   items: CartItem[];
   totalPrice: number;
-  status: 'pending' | 'processing' | 'shipped' | 'delivered';
+  status: "pending" | "processing" | "shipped" | "delivered";
   shippingAddress: string;
   phoneNumber: string;
   createdAt: string;

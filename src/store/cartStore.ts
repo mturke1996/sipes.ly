@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { CartItem } from '../types';
+import { create } from "zustand";
+import { CartItem } from "../types";
 
 interface CartStore {
   items: CartItem[];
@@ -14,7 +14,9 @@ export const useCartStore = create<CartStore>((set, get) => ({
   items: [],
   addItem: (item) =>
     set((state) => {
-      const existingItem = state.items.find((i) => i.productId === item.productId);
+      const existingItem = state.items.find(
+        (i) => i.productId === item.productId
+      );
       if (existingItem) {
         return {
           items: state.items.map((i) =>
