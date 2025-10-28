@@ -47,12 +47,36 @@ export default function TelegramSettings() {
     );
   };
 
+  // ✅ تعديل: إرسال رسالة ترحيبية بعد الحفظ الناجح
   const handleSave = async () => {
     try {
       setLoading(true);
       await telegramService.saveSettings(settings);
       toast.success("تم حفظ الإعدادات بنجاح");
       loadSettings();
+
+      // إذا كانت الإعدادات مفعّلة وقيم الاتصال صحيحة، أرسل الترحيب
+      if (settings.isEnabled && settings.botToken && settings.chatId) {
+        const welcomeMessage = `
+🎉 <b>مرحباً بك!</b>
+تم ربط البوت بنجاح مع نظام سايبس ليبيا 🚀
+
+📢 ستتلقى الآن الإشعارات مباشرة عبر Telegram.
+
+⏰ ${new Date().toLocaleString("ar-LY")}
+        `;
+
+        const success = await telegramService.sendMessage({
+          chatId: settings.chatId,
+          text: welcomeMessage,
+        });
+
+        if (success) {
+          toast.success("✅ تم إرسال رسالة الترحيب بنجاح!");
+        } else {
+          toast.error("⚠️ فشل في إرسال رسالة الترحيب");
+        }
+      }
     } catch (error) {
       console.error("Failed to save settings:", error);
       toast.error("فشل في حفظ الإعدادات");
