@@ -40,13 +40,36 @@ class TelegramService {
     }
   }
 
-  // Save Telegram settings
+  // ✅ Save Telegram settings + إرسال رسالة ترحيب بعد الحفظ
   async saveSettings(settings: TelegramSettings): Promise<void> {
     this.botToken = settings.botToken;
     this.chatId = settings.chatId;
     this.isEnabled = settings.isEnabled;
 
     localStorage.setItem("telegramSettings", JSON.stringify(settings));
+
+    // إذا تم تفعيل الخدمة بعد الحفظ، أرسل رسالة ترحيب
+    if (this.isEnabled && this.botToken && this.chatId) {
+      const welcomeMessage = `
+🎉 <b>مرحباً بك!</b>
+تم ربط البوت بنجاح مع نظام سايبس ليبيا 🚀
+
+📢 ستتلقى الآن الإشعارات مباشرة عبر Telegram.
+
+⏰ ${new Date().toLocaleString("ar-LY")}
+      `.trim();
+
+      try {
+        await this.sendMessage({
+          chatId: this.chatId,
+          text: welcomeMessage,
+          parseMode: "HTML",
+        });
+        console.log("تم إرسال رسالة الترحيب بنجاح إلى Telegram ✅");
+      } catch (error) {
+        console.error("فشل في إرسال رسالة الترحيب:", error);
+      }
+    }
   }
 
   // Get current settings
@@ -75,9 +98,7 @@ class TelegramService {
       const url = `https://api.telegram.org/bot${this.botToken}/sendMessage`;
       const response = await fetch(url, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id: message.chatId,
           text: message.text,
@@ -108,9 +129,7 @@ class TelegramService {
         `https://api.telegram.org/bot${this.botToken}/sendMessage`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             chat_id: this.chatId,
             text: message,
@@ -164,7 +183,7 @@ class TelegramService {
     });
   }
 
-  // Format new order message
+  // === Message Formatters ===
   private formatNewOrderMessage(order: any): string {
     return `
 🆕 <b>طلب جديد - سايبس ليبيا</b>
@@ -193,7 +212,6 @@ ${order.shippingAddress}
     `.trim();
   }
 
-  // Format order update message
   private formatOrderUpdateMessage(order: any): string {
     const statusEmoji = {
       pending: "⏳",
@@ -219,7 +237,6 @@ ${
     `.trim();
   }
 
-  // Format low stock message
   private formatLowStockMessage(products: any[]): string {
     return `
 ⚠️ <b>تحذير: مخزون منخفض - سايبس ليبيا</b>
@@ -239,7 +256,6 @@ ${products
     `.trim();
   }
 
-  // Format daily report message
   private formatDailyReportMessage(stats: any): string {
     return `
 📊 <b>التقرير اليومي - سايبس ليبيا</b>
@@ -261,7 +277,6 @@ ${products
     `.trim();
   }
 
-  // Get status text in Arabic
   private getStatusText(status: string): string {
     const statusMap = {
       pending: "في الانتظار",
@@ -274,10 +289,8 @@ ${products
     return statusMap[status as keyof typeof statusMap] || status;
   }
 
-  // Format cart message
   private formatCartMessage(cartData: any): string {
     const { items, total, customerInfo } = cartData;
-
     const cartItemsText = items
       .map(
         (item: any) =>
@@ -287,16 +300,13 @@ ${products
       )
       .join("\n");
 
-    let message = `🛒 <b>طلب جديد من السلة</b>
+    return `
+🛒 <b>طلب جديد من السلة</b>
 
 👤 <b>الاسم:</b> ${customerInfo?.name || "غير محدد"}
 📞 <b>رقم الهاتف:</b> ${customerInfo?.phone || "غير محدد"}
 📍 <b>العنوان:</b> ${customerInfo?.address || "غير محدد"}
-${
-  customerInfo?.email
-    ? `📧 <b>البريد الإلكتروني:</b> ${customerInfo.email}`
-    : ""
-}
+${customerInfo?.email ? `📧 <b>البريد:</b> ${customerInfo.email}` : ""}
 
 🛍️ <b>المنتجات:</b>
 ${cartItemsText}
@@ -304,16 +314,13 @@ ${cartItemsText}
 💰 <b>المجموع الكلي:</b> ${total} د.ل
 ${customerInfo?.notes ? `\n💬 <b>ملاحظات:</b>\n${customerInfo.notes}` : ""}
 
-⏰ <b>وقت الطلب:</b> ${new Date().toLocaleString("ar-LY")}`;
-
-    return message.trim();
+⏰ <b>وقت الطلب:</b> ${new Date().toLocaleString("ar-LY")}
+    `.trim();
   }
 
   // Test Telegram connection
   async testConnection(): Promise<boolean> {
-    if (!this.botToken || !this.chatId) {
-      return false;
-    }
+    if (!this.botToken || !this.chatId) return false;
 
     try {
       const url = `https://api.telegram.org/bot${this.botToken}/getMe`;
@@ -321,7 +328,6 @@ ${customerInfo?.notes ? `\n💬 <b>ملاحظات:</b>\n${customerInfo.notes}` :
       const result = await response.json();
 
       if (result.ok) {
-        // Send test message
         await this.sendMessage({
           chatId: this.chatId,
           text: "✅ تم ربط Telegram بنجاح مع سايبس ليبيا!\n\nيمكنك الآن تلقي الإشعارات والإحصائيات.",
